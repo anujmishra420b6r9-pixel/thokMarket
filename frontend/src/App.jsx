@@ -8,7 +8,7 @@ import MasterHome from './MasterPages/MasterHome'
 import CreateAdmin from './MasterPages/CreateAdmin'
 import CreateProTy from './MasterPages/CreateProTy'
 import CreateCate from './MasterPages/CreateCate'
-import CreateProduct from "./AdminPage/CreateProduct"
+import CreateProduct from "./AdminPage/createProduct"
 import ProductWithProductType from './pages/productwithProductType';
 import SingalProduct from "./pages/singalProduct";
 import CartView from './pages/cartView';
