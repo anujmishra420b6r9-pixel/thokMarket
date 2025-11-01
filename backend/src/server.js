@@ -17,13 +17,17 @@ const app = express();
 app.use(express.json());
 
 
-// app.use(
-//   cors({
-//     origin: "http://localhost:5173",
-//     credentials: true,
-//       methods: ["GET", "POST", "PUT", "DELETE"],
-//   allowedHeaders: ["Content-Type", "Authorization"]
-//   }));
+import cors from "cors";
+
+app.use(
+  cors({
+    origin: ["https://thokmarket-frontend.onrender.com"],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
 
 
 
@@ -32,11 +36,12 @@ app.use(cookieParser());
 // console.log("DB connections imported");
 app.use("/api", authRoutes);
 
-app.use(express.static(path.join(__dirname,"../frontend/dist")))
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
-app.get("*",(req,res) =>{
-  res.sendFile(path.join(__dirname,"frontend","dist","index.html"))
-})
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/dist", "index.html"));
+});
+
 
 // global error handler (simple)
 app.use((err, req, res, next) => {

@@ -1,10 +1,9 @@
 import axios from "axios";
 
-const BASE_URL =
-  import.meta.env.MODE === "development"
-    ? import.meta.env.VITE_BACKEND_URL // local dev mode
-    : import.meta.env.VITE_BACKEND_URL || "/api"; // production fallback
+// 🔹 Direct backend URL define कर दो
+const BASE_URL = "https://thokmarket.onrender.com/api";
 
+// 🔹 Axios instance बनाओ
 const api = axios.create({
   baseURL: BASE_URL,
   withCredentials: true,
