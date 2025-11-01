@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
 import api from "../lib/axios";
 import { toast } from "react-toastify";
-import { ArrowLeft, Copy } from "lucide-react";
 
 const SingleOrderPage = () => {
   const [searchParams] = useSearchParams();
@@ -16,7 +15,6 @@ const SingleOrderPage = () => {
   const [order, setOrder] = useState(passedOrder || null);
   const [userRank, setUserRank] = useState(passedRank || "");
   const [loading, setLoading] = useState(true);
-
   const [showCancelForm, setShowCancelForm] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
   const [customReason, setCustomReason] = useState("");
@@ -52,20 +50,16 @@ const SingleOrderPage = () => {
     "❌ Fraud / Suspicious Order पाया गया",
   ];
 
-  const handleBack = () => navigate(-1);
-
   useEffect(() => {
     if (!orderId) {
       toast.error("Invalid order. Redirecting back.");
       navigate(-1);
       return;
     }
-
     if (passedOrder) {
       setLoading(false);
       return;
     }
-
     const fetchOrder = async () => {
       try {
         const res = await api.get(`/viewSingleOrder`, { params: { orderId } });
@@ -80,7 +74,6 @@ const SingleOrderPage = () => {
         setLoading(false);
       }
     };
-
     fetchOrder();
   }, [orderId, passedOrder, navigate]);
 
@@ -103,12 +96,9 @@ const SingleOrderPage = () => {
       toast.error("कृपया एक कारण चुनें या लिखें।");
       return;
     }
-
     const finalReason = `cancel (${cancelReason || customReason}) by ${userRank}`;
     try {
-      const res = await api.post(`/updateOrderStatus/${order._id}`, {
-        status: finalReason,
-      });
+      const res = await api.post(`/updateOrderStatus/${order._id}`, { status: finalReason });
       if (res.data.success) {
         toast.success("Order cancelled successfully!");
         setShowCancelForm(false);
@@ -120,200 +110,207 @@ const SingleOrderPage = () => {
     }
   };
 
-  if (loading)
+  if (loading) {
     return (
-      <div className="flex justify-center items-center h-[80vh] text-xl text-gray-500">
-        Loading Order Details...
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
+        <div className="text-center">
+          <div className="relative w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4">
+            <div className="absolute inset-0 border-4 border-indigo-200 rounded-full"></div>
+            <div className="absolute inset-0 border-4 border-indigo-600 rounded-full border-t-transparent animate-spin"></div>
+          </div>
+          <p className="text-gray-700 text-base sm:text-lg font-medium">Loading order...</p>
+        </div>
       </div>
     );
+  }
 
-  if (!order)
+  if (!order) {
     return (
-      <div className="flex justify-center items-center h-[80vh] text-red-500 text-lg">
-        Order not found.
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-orange-50 p-4">
+        <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 max-w-md w-full text-center">
+          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Order Not Found</h2>
+          <p className="text-gray-600 text-sm sm:text-base mb-6">The requested order could not be found.</p>
+          <button onClick={() => navigate(-1)} className="w-full px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-lg hover:from-indigo-600 hover:to-purple-700 transition font-medium shadow-lg text-sm sm:text-base">
+            Go Back
+          </button>
+        </div>
       </div>
     );
+  }
 
-  // Normalize status
-  const rawStatus = (order.status || order.orderStatus || "")
-    .toString()
-    .toLowerCase();
-
-  const phone =
-    order.phone ||
-    order.userPhone ||
-    order?.user?.phone ||
-    order?.shipping?.phone ||
-    order?.customerPhone ||
-    "";
-
+  const rawStatus = (order.status || order.orderStatus || "").toString().toLowerCase();
   const isPending = rawStatus.includes("pending");
   const isConfirmed = rawStatus.includes("confirm");
   const isDelivered = rawStatus.includes("deliver");
   const isCancelled = rawStatus.includes("cancel");
 
   return (
-    <div className="max-w-5xl mx-auto p-6 bg-white shadow-lg rounded-2xl mt-6">
-      <div className="flex items-center gap-3 border-b pb-4 mb-4">
-        <button
-          onClick={handleBack}
-          className="p-2 rounded-full hover:bg-gray-200 transition"
-        >
-          <ArrowLeft size={22} />
-        </button>
-
-        <div className="flex-1">
-          <h1 className="text-2xl font-semibold text-gray-800">
-            Order Details
-          </h1>
-
-          <p className="text-sm text-gray-500 mt-1">
-            Order Date:{" "}
-            {order.createdAt
-              ? new Date(order.createdAt).toLocaleString("en-IN", {
-                  dateStyle: "medium",
-                  timeStyle: "short",
-                })
-              : "—"}
-          </p>
-
-          <p className="text-sm text-gray-500 mt-1">
-            Order Status:
-            <span className="font-medium text-blue-600 ml-1 capitalize">
-              {order.status || order.orderStatus || "Pending"}
-            </span>
-          </p>
-        </div>
-      </div>
-
-      {/* Items */}
-      <div>
-        <h2 className="text-lg font-semibold text-gray-700 mb-3">
-          Products in Order
-        </h2>
-        <div className="border rounded-xl overflow-hidden">
-          <table className="w-full text-left border-collapse">
-            <thead className="bg-gray-100 text-gray-700">
-              <tr>
-                <th className="py-3 px-4">#</th>
-                <th className="py-3 px-4">Product Name</th>
-                <th className="py-3 px-4">Quantity</th>
-                <th className="py-3 px-4">Price (₹)</th>
-                <th className="py-3 px-4">Category</th>
-                <th className="py-3 px-4">Product Type</th>
-              </tr>
-            </thead>
-            <tbody>
-              {order.items.map((item, i) => (
-                <tr key={i} className="border-t hover:bg-gray-50">
-                  <td className="py-3 px-4">{i + 1}</td>
-                  <td className="py-3 px-4">{item.productName}</td>
-                  <td className="py-3 px-4">{item.quantity}</td>
-                  <td className="py-3 px-4">₹{item.price}</td>
-                  <td className="py-3 px-4">{item.category || "—"}</td>
-                  <td className="py-3 px-4">{item.productType || "—"}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div className="flex justify-end mt-5">
-        <p className="text-xl font-semibold text-gray-800">
-          Total Amount: ₹
-          {order.items.reduce(
-            (sum, item) => sum + (item.price || 0) * (item.quantity || 0),
-            0
-          )}
-        </p>
-      </div>
-
-      {/* Actions */}
-      <div className="mt-6 border-t pt-4">
-        {userRank === "user" && !isDelivered && !isCancelled && (
-          <div className="text-right">
-            <button
-              onClick={() => setShowCancelForm(!showCancelForm)}
-              className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg"
-            >
-              Cancel Order
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 py-4 sm:py-8 px-3 sm:px-4 pb-24 md:pb-8">
+      <div className="max-w-5xl mx-auto space-y-4 sm:space-y-6">
+        {/* Header */}
+        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-4 sm:p-6 text-white">
+            <button onClick={() => navigate(-1)} className="flex items-center text-white hover:text-indigo-100 mb-3 sm:mb-4 transition-colors">
+              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              <span className="text-sm sm:text-base font-medium">Back</span>
             </button>
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2">Order Details</h1>
+            <p className="text-xs sm:text-sm text-indigo-100">
+              {order.createdAt ? new Date(order.createdAt).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" }) : "—"}
+            </p>
+            <div className={`inline-block px-3 sm:px-4 py-1 sm:py-2 rounded-full font-bold text-xs sm:text-sm mt-3 ${
+              isPending ? "bg-yellow-400 text-yellow-900" : 
+              isConfirmed ? "bg-blue-400 text-blue-900" :
+              isDelivered ? "bg-green-400 text-green-900" : 
+              isCancelled ? "bg-red-400 text-red-900" : "bg-blue-400 text-blue-900"
+            }`}>
+              {order.status || order.orderStatus || "Pending"}
+            </div>
           </div>
-        )}
+        </div>
 
-        {userRank === "admin" && (
-          <div className="flex flex-wrap gap-3 justify-end">
-            {isPending && (
-              <>
-                <button
-                  onClick={() => handleStatusUpdate("order confirmed")}
-                  className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg"
-                >
-                  Confirm Order
-                </button>
-                <button
-                  onClick={() => setShowCancelForm(!showCancelForm)}
-                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
-                >
-                  Cancel Order
-                </button>
-              </>
-            )}
-
-            {/* ✅ Confirm के बाद अब ये दिखेगा */}
-            {isConfirmed && !isDelivered && (
-              <button
-                onClick={() => handleStatusUpdate("order delivered")}
-                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg"
-              >
-                Mark Delivered
-              </button>
-            )}
+        {/* Products */}
+        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+          <div className="bg-gradient-to-r from-gray-50 to-gray-100 p-4 sm:p-6 border-b-2 border-gray-200">
+            <h2 className="text-lg sm:text-xl font-bold text-gray-800">Products in Order</h2>
+            <p className="text-xs sm:text-sm text-gray-600">{order.items.length} {order.items.length === 1 ? 'item' : 'items'}</p>
           </div>
-        )}
-
-        {showCancelForm && (
-          <div className="mt-6 border p-4 rounded-xl bg-gray-50">
-            <h3 className="font-semibold mb-3 text-gray-700">
-              कृपया कैंसिल करने का कारण चुनें:
-            </h3>
-            <div className="flex flex-col gap-2 max-h-60 overflow-y-auto">
-              {(userRank === "user" ? userCancelReasons : adminCancelReasons).map(
-                (reason, i) => (
-                  <label key={i} className="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name="cancelReason"
-                      value={reason}
-                      checked={cancelReason === reason}
-                      onChange={(e) => setCancelReason(e.target.value)}
-                    />
-                    <span>{reason}</span>
-                  </label>
-                )
-              )}
+          <div className="p-3 sm:p-6">
+            {/* Mobile Card View */}
+            <div className="sm:hidden space-y-3">
+              {order.items.map((item, i) => (
+                <div key={i} className="bg-gray-50 rounded-xl p-3 border border-gray-200">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="w-6 h-6 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-bold text-xs">{i + 1}</span>
+                    <span className="text-xs text-gray-500">{item.category || "—"}</span>
+                  </div>
+                  <h3 className="font-semibold text-gray-800 text-sm mb-1">{item.productName}</h3>
+                  <div className="grid grid-cols-2 gap-2 text-xs text-gray-600">
+                    <div><span className="font-medium">Qty:</span> {item.quantity}</div>
+                    <div><span className="font-medium">Price:</span> ₹{item.price}</div>
+                    <div className="col-span-2"><span className="font-medium">Type:</span> {item.productType || "—"}</div>
+                  </div>
+                  <div className="mt-2 pt-2 border-t border-gray-200">
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs text-gray-500">Subtotal</span>
+                      <span className="font-bold text-green-600">₹{(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
 
-            <input
-              type="text"
-              placeholder="अगर अन्य कारण है तो यहाँ लिखें..."
-              className="border rounded-md w-full p-2 mt-3"
-              value={customReason}
-              onChange={(e) => setCustomReason(e.target.value)}
-            />
+            {/* Desktop Table View */}
+            <div className="hidden sm:block overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="bg-gradient-to-r from-indigo-50 to-purple-50">
+                    <th className="px-4 py-3 text-left text-xs font-bold text-gray-700">#</th>
+                    <th className="px-4 py-3 text-left text-xs font-bold text-gray-700">Product</th>
+                    <th className="px-4 py-3 text-center text-xs font-bold text-gray-700">Qty</th>
+                    <th className="px-4 py-3 text-center text-xs font-bold text-gray-700">Price</th>
+                    <th className="px-4 py-3 text-left text-xs font-bold text-gray-700">Category</th>
+                    <th className="px-4 py-3 text-right text-xs font-bold text-gray-700">Subtotal</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {order.items.map((item, i) => (
+                    <tr key={i} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-4 py-3">
+                        <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center">
+                          <span className="text-indigo-600 font-bold text-sm">{i + 1}</span>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3">
+                        <p className="font-semibold text-gray-800 text-sm">{item.productName}</p>
+                        <p className="text-xs text-gray-500">{item.productType || "—"}</p>
+                      </td>
+                      <td className="px-4 py-3 text-center">
+                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">{item.quantity}</span>
+                      </td>
+                      <td className="px-4 py-3 text-center">
+                        <span className="text-gray-800 font-semibold text-sm">₹{item.price}</span>
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-800">{item.category || "—"}</span>
+                      </td>
+                      <td className="px-4 py-3 text-right">
+                        <span className="font-bold text-green-600">₹{(item.price * item.quantity).toFixed(2)}</span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
 
-            <div className="flex justify-end gap-3 mt-4">
-              <button
-                onClick={() => setShowCancelForm(false)}
-                className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-lg"
-              >
+          {/* Total */}
+          <div className="bg-gradient-to-r from-indigo-50 to-purple-50 p-4 sm:p-6 border-t-2 border-gray-200">
+            <div className="flex justify-between items-center">
+              <span className="text-sm sm:text-base text-gray-700 font-medium">Total Amount</span>
+              <span className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                ₹{order.items.reduce((sum, item) => sum + (item.price || 0) * (item.quantity || 0), 0).toFixed(2)}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        {!showCancelForm && (
+          <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-6">
+            {userRank === "user" && !isDelivered && !isCancelled && (
+              <button onClick={() => setShowCancelForm(true)} className="w-full px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl font-semibold hover:from-red-600 hover:to-red-700 transition-all shadow-lg text-sm sm:text-base">
+                Cancel Order
+              </button>
+            )}
+
+            {userRank === "admin" && (
+              <div className="flex flex-col sm:flex-row gap-3">
+                {isPending && (
+                  <>
+                    <button onClick={() => handleStatusUpdate("order confirmed")} className="flex-1 px-4 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl font-semibold hover:from-green-600 hover:to-green-700 transition-all shadow-lg text-sm sm:text-base">
+                      Confirm Order
+                    </button>
+                    <button onClick={() => setShowCancelForm(true)} className="flex-1 px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl font-semibold hover:from-red-600 hover:to-red-700 transition-all shadow-lg text-sm sm:text-base">
+                      Cancel Order
+                    </button>
+                  </>
+                )}
+                {isConfirmed && !isDelivered && (
+                  <button onClick={() => handleStatusUpdate("order delivered")} className="w-full px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl font-semibold hover:from-blue-600 hover:to-blue-700 transition-all shadow-lg text-sm sm:text-base">
+                    Mark Delivered
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Cancel Form */}
+        {showCancelForm && (
+          <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-6">
+            <h3 className="text-base sm:text-lg font-bold text-gray-800 mb-4">कृपया कैंसिल करने का कारण चुनें:</h3>
+            <div className="space-y-2 max-h-60 overflow-y-auto mb-4">
+              {(userRank === "user" ? userCancelReasons : adminCancelReasons).map((reason, i) => (
+                <label key={i} className="flex items-start gap-2 p-2 hover:bg-gray-50 rounded-lg cursor-pointer transition-colors">
+                  <input type="radio" name="cancelReason" value={reason} checked={cancelReason === reason} onChange={(e) => setCancelReason(e.target.value)} className="mt-1" />
+                  <span className="text-sm sm:text-base text-gray-700">{reason}</span>
+                </label>
+              ))}
+            </div>
+            <input type="text" placeholder="अगर अन्य कारण है तो यहाँ लिखें..." className="w-full border-2 border-gray-300 rounded-lg p-3 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 mb-4" value={customReason} onChange={(e) => setCustomReason(e.target.value)} />
+            <div className="flex gap-3">
+              <button onClick={() => setShowCancelForm(false)} className="flex-1 px-4 py-3 bg-gray-200 text-gray-800 rounded-xl font-semibold hover:bg-gray-300 transition-colors text-sm sm:text-base">
                 Close
               </button>
-              <button
-                onClick={handleCancelSubmit}
-                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
-              >
+              <button onClick={handleCancelSubmit} className="flex-1 px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl font-semibold hover:from-red-600 hover:to-red-700 transition-all shadow-lg text-sm sm:text-base">
                 Confirm Cancel
               </button>
             </div>
