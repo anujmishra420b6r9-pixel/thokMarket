@@ -170,7 +170,7 @@ const Profile = () => {
       <div className="px-4 mt-6">
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-lg font-bold text-gray-800">
-            {user.rank === "admin" ? "📦 Received Orders" : "🛍️ My Orders"}
+            {user.rank === "admin" ? "📦 मिले हुए ऑर्डर" : "🛍️ मेरे ऑर्डर"}
           </h3>
           <span className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-bold">
             {orders.length}

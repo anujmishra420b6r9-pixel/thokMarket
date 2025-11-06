@@ -51,7 +51,7 @@ const HomePage = () => {
             <div className="absolute inset-0 border-4 border-indigo-200 rounded-full"></div>
             <div className="absolute inset-0 border-4 border-indigo-600 rounded-full border-t-transparent animate-spin"></div>
           </div>
-          <p className="text-gray-700 text-base sm:text-lg font-medium animate-pulse">Loading products...</p>
+          <p className="text-gray-700 text-base sm:text-lg font-medium animate-pulse">प्रोडक्ट लोड हो रहे हैं...</p>
         </div>
       </div>
     );
