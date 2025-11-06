@@ -68,9 +68,9 @@ const HomePage = () => {
         <div className="sticky top-0 z-10 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 pt-4 sm:pt-6 pb-4 px-4 sm:px-6">
           <div className="text-center mb-4 sm:mb-6">
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-1 sm:mb-2 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-              𝑊𝑒𝑙𝑐𝑜𝑚𝑒 𝑇𝑜 ThokMarket
+              ThokMarket में आपका स्वागत है
             </h1>
-            <p className="text-sm sm:text-base text-gray-600">Discover and explore our amazing products</p>
+            <p className="text-sm sm:text-base text-gray-600">ThokMarket के शानदार प्रोडक्ट्स देखें और जानें</p>
           </div>
 
           {/* Search Bar */}
@@ -137,7 +137,7 @@ const HomePage = () => {
                     {product.category}
                   </span>
                   <button className="mt-auto w-full px-2 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-md sm:rounded-lg hover:from-indigo-600 hover:to-purple-700 transition font-medium shadow-md hover:shadow-lg flex items-center justify-center space-x-1 sm:space-x-2 text-xs sm:text-sm">
-                    <span>View</span>
+                    <span>प्रोडक्ट देखें</span>
                     <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                     </svg>
