@@ -73,7 +73,7 @@ const Profile = () => {
             <div className="absolute inset-0 border-4 border-indigo-200 rounded-full"></div>
             <div className="absolute inset-0 border-4 border-indigo-600 rounded-full border-t-transparent animate-spin"></div>
           </div>
-          <p className="text-gray-700 text-base font-medium">Loading...</p>
+          <p className="text-gray-700 text-base font-medium">लोड हो रहा है...</p>
         </div>
       </div>
     );
@@ -91,8 +91,8 @@ const Profile = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h2 className="text-xl font-bold text-gray-800 mb-1">User Not Found</h2>
-          <p className="text-gray-600 text-sm">User data could not be loaded.</p>
+          <h2 className="text-xl font-bold text-gray-800 mb-1">यूज़र नहीं मिला</h2>
+          <p className="text-gray-600 text-sm">यूज़र की जानकारी लोड नहीं हो सकी।</p>
         </div>
       </div>
     );
@@ -146,7 +146,7 @@ const Profile = () => {
                 </svg>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-xs text-gray-500 font-medium">Address</p>
+                <p className="text-xs text-gray-500 font-medium">पता</p>
                 <p className="text-sm text-gray-800 font-semibold break-words">{user.address}</p>
               </div>
             </div>
@@ -158,7 +158,7 @@ const Profile = () => {
                 </svg>
               </div>
               <div>
-                <p className="text-xs text-gray-500 font-medium">Phone</p>
+                <p className="text-xs text-gray-500 font-medium">फ़ोन नंबर</p>
                 <p className="text-sm text-gray-800 font-semibold">{user.number}</p>
               </div>
             </div>
@@ -180,8 +180,8 @@ const Profile = () => {
         {orders.length === 0 ? (
           <div className="bg-white rounded-xl shadow-md p-8 text-center">
             <div className="text-6xl mb-3">📭</div>
-            <p className="text-gray-600 font-medium">No Orders Yet</p>
-            <p className="text-gray-400 text-sm mt-1">Your orders will appear here</p>
+            <p className="text-gray-600 font-medium">अभी तक कोई ऑर्डर नहीं है</p>
+            <p className="text-gray-400 text-sm mt-1">आपके ऑर्डर यहाँ दिखाई देंगे</p>
           </div>
         ) : (
           <div className="space-y-3">

@@ -118,7 +118,7 @@ const SingleOrderPage = () => {
             <div className="absolute inset-0 border-4 border-indigo-200 rounded-full"></div>
             <div className="absolute inset-0 border-4 border-indigo-600 rounded-full border-t-transparent animate-spin"></div>
           </div>
-          <p className="text-gray-700 text-base sm:text-lg font-medium">Loading order...</p>
+          <p className="text-gray-700 text-base sm:text-lg font-medium">ऑर्डर लोड हो रहा है...</p>
         </div>
       </div>
     );
@@ -133,8 +133,8 @@ const SingleOrderPage = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Order Not Found</h2>
-          <p className="text-gray-600 text-sm sm:text-base mb-6">The requested order could not be found.</p>
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">कोई ऑर्डर नहीं मिला</h2>
+          <p className="text-gray-600 text-sm sm:text-base mb-6">जिस ऑर्डर की आप तलाश कर रहे हैं, वह नहीं मिला।</p>
           <button onClick={() => navigate(-1)} className="w-full px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-lg hover:from-indigo-600 hover:to-purple-700 transition font-medium shadow-lg text-sm sm:text-base">
             Go Back
           </button>
@@ -159,9 +159,9 @@ const SingleOrderPage = () => {
               <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
               </svg>
-              <span className="text-sm sm:text-base font-medium">Back</span>
+              <span className="text-sm sm:text-base font-medium">पीछे जाएँ</span>
             </button>
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2">Order Details</h1>
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2">ऑर्डर की जानकारी</h1>
             <p className="text-xs sm:text-sm text-indigo-100">
               {order.createdAt ? new Date(order.createdAt).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" }) : "—"}
             </p>
@@ -179,7 +179,7 @@ const SingleOrderPage = () => {
         {/* Products */}
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="bg-gradient-to-r from-gray-50 to-gray-100 p-4 sm:p-6 border-b-2 border-gray-200">
-            <h2 className="text-lg sm:text-xl font-bold text-gray-800">Products in Order</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-gray-800">ऑर्डर में शामिल प्रोडक्ट्स</h2>
             <p className="text-xs sm:text-sm text-gray-600">{order.items.length} {order.items.length === 1 ? 'item' : 'items'}</p>
           </div>
           <div className="p-3 sm:p-6">
@@ -193,9 +193,9 @@ const SingleOrderPage = () => {
                   </div>
                   <h3 className="font-semibold text-gray-800 text-sm mb-1">{item.productName}</h3>
                   <div className="grid grid-cols-2 gap-2 text-xs text-gray-600">
-                    <div><span className="font-medium">Qty:</span> {item.quantity}</div>
-                    <div><span className="font-medium">Price:</span> ₹{item.price}</div>
-                    <div className="col-span-2"><span className="font-medium">Type:</span> {item.productType || "—"}</div>
+                    <div><span className="font-medium">संख्या:</span> {item.quantity}</div>
+                    <div><span className="font-medium">कीमत:</span> ₹{item.price}</div>
+                    <div className="col-span-2"><span className="font-medium">प्रकार:</span> {item.productType || "—"}</div>
                   </div>
                   <div className="mt-2 pt-2 border-t border-gray-200">
                     <div className="flex justify-between items-center">
@@ -213,11 +213,11 @@ const SingleOrderPage = () => {
                 <thead>
                   <tr className="bg-gradient-to-r from-indigo-50 to-purple-50">
                     <th className="px-4 py-3 text-left text-xs font-bold text-gray-700">#</th>
-                    <th className="px-4 py-3 text-left text-xs font-bold text-gray-700">Product</th>
-                    <th className="px-4 py-3 text-center text-xs font-bold text-gray-700">Qty</th>
-                    <th className="px-4 py-3 text-center text-xs font-bold text-gray-700">Price</th>
-                    <th className="px-4 py-3 text-left text-xs font-bold text-gray-700">Category</th>
-                    <th className="px-4 py-3 text-right text-xs font-bold text-gray-700">Subtotal</th>
+                    <th className="px-4 py-3 text-left text-xs font-bold text-gray-700">प्रोडक्ट</th>
+                    <th className="px-4 py-3 text-center text-xs font-bold text-gray-700">संख्या</th>
+                    <th className="px-4 py-3 text-center text-xs font-bold text-gray-700">कीमत</th>
+                    <th className="px-4 py-3 text-left text-xs font-bold text-gray-700">थोक विक्रेता</th>
+                    <th className="px-4 py-3 text-right text-xs font-bold text-gray-700">कुल रकम</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
@@ -267,7 +267,7 @@ const SingleOrderPage = () => {
           <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-6">
             {userRank === "user" && !isDelivered && !isCancelled && (
               <button onClick={() => setShowCancelForm(true)} className="w-full px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl font-semibold hover:from-red-600 hover:to-red-700 transition-all shadow-lg text-sm sm:text-base">
-                Cancel Order
+                ऑर्डर कैंसिल करें
               </button>
             )}
 
@@ -276,16 +276,16 @@ const SingleOrderPage = () => {
                 {isPending && (
                   <>
                     <button onClick={() => handleStatusUpdate("order confirmed")} className="flex-1 px-4 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl font-semibold hover:from-green-600 hover:to-green-700 transition-all shadow-lg text-sm sm:text-base">
-                      Confirm Order
+                      ऑर्डर कन्फर्म करें
                     </button>
                     <button onClick={() => setShowCancelForm(true)} className="flex-1 px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl font-semibold hover:from-red-600 hover:to-red-700 transition-all shadow-lg text-sm sm:text-base">
-                      Cancel Order
+                      ऑर्डर कैंसिल करें
                     </button>
                   </>
                 )}
                 {isConfirmed && !isDelivered && (
                   <button onClick={() => handleStatusUpdate("order delivered")} className="w-full px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl font-semibold hover:from-blue-600 hover:to-blue-700 transition-all shadow-lg text-sm sm:text-base">
-                    Mark Delivered
+                    डिलीवरी पूरी करें
                   </button>
                 )}
               </div>
@@ -311,7 +311,7 @@ const SingleOrderPage = () => {
                 Close
               </button>
               <button onClick={handleCancelSubmit} className="flex-1 px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl font-semibold hover:from-red-600 hover:to-red-700 transition-all shadow-lg text-sm sm:text-base">
-                Confirm Cancel
+               कैंसिल कन्फर्म करें
               </button>
             </div>
           </div>

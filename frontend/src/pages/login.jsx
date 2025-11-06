@@ -66,7 +66,7 @@ const Login = () => {
         <input
           type="number"
           name="number"
-          placeholder="Phone Number"
+          placeholder="फ़ोन नंबर"
           value={form.number}
           onChange={handleChange}
           className="w-full mb-4 p-2 border rounded-md"
@@ -76,7 +76,7 @@ const Login = () => {
         <div className="relative mb-4">
           <input
             type={showPassword ? "text" : "password"}
-            name="password"
+            name="पासवर्ड"
             placeholder="Password"
             value={form.password}
             onChange={handleChange}
@@ -111,7 +111,7 @@ const Login = () => {
             onClick={() => navigate("/signup")}
             className="w-full bg-gray-100 text-gray-800 py-3 rounded-xl border border-gray-300 shadow-sm hover:bg-gray-200 hover:shadow-md transition-all duration-300 font-semibold"
           >
-            Don’t have an account? Signup
+            अभी तक अकाउंट नहीं है? साइनअप करें
           </button>
         </div>
       </form>

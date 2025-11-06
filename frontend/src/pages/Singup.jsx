@@ -78,7 +78,7 @@ const Signup = () => {
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 border rounded shadow-md">
-      <h2 className="text-2xl font-bold mb-4 text-center">User Signup</h2>
+      <h2 className="text-2xl font-bold mb-4 text-center">यूज़र साइनअप</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
 
         <input
@@ -127,7 +127,7 @@ const Signup = () => {
               className="w-full px-3 py-2 border border-gray-300 rounded-md 
               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent cursor-pointer"
             >
-              <option value="">Select a category</option>
+              <option value="">थोक विक्रेता को चुनें</option>
               {categories.map((cat) => (
                 <option key={cat._id} value={cat.category}>
                   {cat.category}
@@ -149,7 +149,7 @@ const Signup = () => {
       {/* 🔹 Already have account button */}
       <div className="text-center mt-4">
         <p className="text-gray-600">
-          Already have an account?{" "}
+          क्या आपका पहले से अकाउंट है{" "}
           <button
             type="button"
             onClick={() => navigate("/login")}

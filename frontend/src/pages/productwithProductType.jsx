@@ -103,7 +103,7 @@ const ProductWithProductType = () => {
             <div className="absolute inset-0 border-4 border-indigo-200 rounded-full"></div>
             <div className="absolute inset-0 border-4 border-indigo-600 rounded-full border-t-transparent animate-spin"></div>
           </div>
-          <p className="text-gray-700 text-lg font-medium animate-pulse">Loading products...</p>
+          <p className="text-gray-700 text-lg font-medium animate-pulse">प्रोडक्ट लोड हो रहा है...</p>
         </div>
       </div>
     );
@@ -118,7 +118,7 @@ const ProductWithProductType = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Error</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">लोड करने में दिक्कत आई है</h2>
           <p className="text-gray-600 mb-6">{error}</p>
           <div className="flex gap-3">
             <button onClick={fetchProductsByType} className="flex-1 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium">Retry</button>
@@ -140,21 +140,21 @@ const ProductWithProductType = () => {
             <svg className="w-5 h-5 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
-            <span className="font-medium">Back to Home</span>
+            <span className="font-medium">वापस जाएँ</span>
           </button>
           <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">
             {decodedProductType}
           </h1>
           <div className="flex items-center space-x-2">
-            <span className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm font-semibold">{products.length} Products Available</span>
+            <span className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm font-semibold">{products.length} मौजूद प्रोडक्ट्स</span>
           </div>
         </div>
 
         {/* Products Grid */}
         {products.length === 0 ? (
           <div className="bg-white rounded-2xl shadow-xl p-12 text-center">
-            <h3 className="text-2xl font-bold text-gray-800 mb-2">No Products Found</h3>
-            <p className="text-gray-600 mb-6">No products available for {decodedProductType}</p>
+            <h3 className="text-2xl font-bold text-gray-800 mb-2">कोई प्रोडक्ट्स नहीं मिले</h3>
+            <p className="text-gray-600 mb-6"> विक्रेता के लिए कोई प्रोडक्ट उपलब्ध नहीं है{decodedProductType}</p>
             <button onClick={() => navigate("/")} className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-lg hover:from-indigo-600 hover:to-purple-700 transition font-medium">Back to Home</button>
           </div>
         ) : (
@@ -192,7 +192,7 @@ const ProductWithProductType = () => {
                 {/* Quantity & Add to Cart */}
                 <div className="px-5 pb-5 space-y-3">
                   <div className="bg-gray-50 rounded-xl p-3">
-                    <label className="block text-xs font-semibold text-gray-600 mb-2">Quantity (Min: 5)</label>
+                    <label className="block text-xs font-semibold text-gray-600 mb-2">संख्या (Min: 5)</label>
                     <div className="flex items-center justify-center space-x-3">
                       <button type="button" onClick={() => decrementQuantity(p._id)} className="w-10 h-10 bg-gradient-to-br from-gray-200 to-gray-300 hover:from-gray-300 hover:to-gray-400 rounded-lg flex items-center justify-center transition-all shadow-md hover:shadow-lg transform hover:scale-105">
                         <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -212,7 +212,7 @@ const ProductWithProductType = () => {
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m0 0h8m-10 0a1.5 1.5 0 003 0m-3 0a1.5 1.5 0 00-3 0m3 0h1.5m-1.5 0a1.5 1.5 0 003 0" />
                     </svg>
-                    <span>Add to Cart</span>
+                    <span>कार्ट में डालें</span>
                   </button>
                 </div>
               </form>

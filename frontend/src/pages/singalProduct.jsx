@@ -156,7 +156,7 @@ const SingalProduct = () => {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-indigo-200 border-t-indigo-600 mb-4"></div>
-          <p className="text-gray-600 text-lg font-medium">Loading product...</p>
+          <p className="text-gray-600 text-lg font-medium">प्रोडक्ट लोड हो रहा है...</p>
         </div>
       </div>
     );
@@ -210,7 +210,7 @@ const SingalProduct = () => {
                 d="M15 19l-7-7 7-7"
               />
             </svg>
-            Back to Products
+            वापस जाएँ
           </button>
         </div>
       </div>
@@ -340,7 +340,7 @@ const SingalProduct = () => {
                       d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                     />
                   </svg>
-                  <p className="text-lg font-medium">No image available</p>
+                  <p className="text-lg font-medium">कोई इमेज उपलब्ध नहीं है</p>
                 </div>
               </div>
             )}
@@ -366,11 +366,11 @@ const SingalProduct = () => {
                     ₹{product.productPrice?.toLocaleString("en-IN")}
                   </span>
                   <span className="text-gray-500 text-lg font-medium">
-                    per unit
+                    एक पीस
                   </span>
                 </div>
                 <div className="mt-2 inline-block bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
-                  ✓ Best Price Guaranteed
+                  ✓ सर्वश्रेष्ठ कीमत की गारंटी
                 </div>
               </div>
 
@@ -418,7 +418,7 @@ const SingalProduct = () => {
                       />
                     </svg>
                     <span className="text-sm font-semibold">
-                      Minimum order quantity is 5 units
+                      न्यूनतम ऑर्डर मात्रा 5 पीस है
                     </span>
                   </div>
                 )}
@@ -443,7 +443,7 @@ const SingalProduct = () => {
                     d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                   />
                 </svg>
-                Add to Cart
+                कार्ट में जोड़ें
               </button>
 
               {/* Total Price Preview */}
@@ -451,7 +451,7 @@ const SingalProduct = () => {
                 <div className="mt-6 p-5 bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl border-2 border-green-200">
                   <div className="flex justify-between items-center">
                     <span className="text-gray-700 font-bold text-lg">
-                      Total Amount:
+                      कुल राशि:
                     </span>
                     <span className="text-3xl font-bold text-green-600">
                       ₹
@@ -461,7 +461,7 @@ const SingalProduct = () => {
                     </span>
                   </div>
                   <p className="text-sm text-gray-600 mt-2">
-                    Inclusive of all taxes
+                    सभी टैक्स शामिल हैं
                   </p>
                 </div>
               )}
@@ -485,7 +485,7 @@ const SingalProduct = () => {
                     clipRule="evenodd"
                   />
                 </svg>
-                Seller Information
+                विक्रेता की जानकारी
               </h3>
             </div>
             <div className="p-8">

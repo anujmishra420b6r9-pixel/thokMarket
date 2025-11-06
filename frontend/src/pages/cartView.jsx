@@ -100,8 +100,8 @@ const CartView = () => {
               <FaShoppingCart className="text-indigo-400 text-2xl animate-pulse" />
             </div>
           </div>
-          <p className="text-xl text-gray-700 font-semibold">Loading your cart...</p>
-          <p className="text-sm text-gray-500 mt-2">Please wait a moment</p>
+          <p className="text-xl text-gray-700 font-semibold">आपका कार्ट लोड हो रहा है...</p>
+          <p className="text-sm text-gray-500 mt-2">कृपया इंतज़ार करें</p>
         </div>
         <div className="fixed bottom-0 left-0 w-full z-50">
           <Navbar />
@@ -115,13 +115,13 @@ const CartView = () => {
       <div className="min-h-screen bg-gradient-to-br from-red-50 via-orange-50 to-pink-50 flex items-center justify-center px-4">
         <div className="text-center bg-white p-8 rounded-3xl shadow-2xl max-w-md w-full border-2 border-red-100">
           <div className="text-red-500 text-7xl mb-4 animate-bounce">⚠️</div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Oops!</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">ओह नो!</h2>
           <p className="text-lg text-red-600 font-medium">{error}</p>
           <button
             onClick={() => window.location.reload()}
             className="mt-6 bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-200"
           >
-            Try Again
+            फिर से कोशिश करें
           </button>
         </div>
         <div className="fixed bottom-0 left-0 w-full z-50">
@@ -140,14 +140,14 @@ const CartView = () => {
             <FaShoppingCart className="text-gray-300 text-9xl mx-auto relative" />
           </div>
           <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-3">
-            Your Cart is Empty
+            आपका कार्ट खाली है
           </h2>
-          <p className="text-gray-500 mb-8 text-lg">Start adding products to fill your cart!</p>
+          <p className="text-gray-500 mb-8 text-lg">अपने कार्ट को भरने के लिए प्रोडक्ट जोड़ना शुरू करें!</p>
           <button
             onClick={() => navigate(-1)}
             className="flex items-center gap-3 mx-auto bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 hover:from-blue-600 hover:via-indigo-600 hover:to-purple-600 text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
           >
-            <FaArrowLeft size={20} /> <span>Continue Shopping</span>
+            <FaArrowLeft size={20} /> <span>खरीदारी जारी रखें</span>
           </button>
         </div>
         <div className="fixed bottom-0 left-0 w-full z-50">
@@ -168,11 +168,11 @@ const CartView = () => {
               className="flex items-center gap-2 text-gray-700 hover:text-indigo-600 transition-all duration-200 font-semibold px-4 py-2 hover:bg-indigo-50 rounded-xl group"
             >
               <FaArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform duration-200" /> 
-              <span className="text-sm sm:text-base">Back</span>
+              <span className="text-sm sm:text-base">वापस जाएँ</span>
             </button>
             <div className="flex items-center gap-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-4 py-2 rounded-full shadow-lg">
               <MdShoppingBag size={20} />
-              <span className="font-bold text-sm sm:text-base">{cartItems.length} Items</span>
+              <span className="font-bold text-sm sm:text-base">{cartItems.length}सामान</span>
             </div>
           </div>
           
@@ -182,9 +182,9 @@ const CartView = () => {
             </div>
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                Shopping Cart
+                शॉपिंग कार्ट
               </h1>
-              <p className="text-xs sm:text-sm text-gray-500 mt-1">Review your items before checkout</p>
+              <p className="text-xs sm:text-sm text-gray-500 mt-1">चेकआउट से पहले अपने सामान देखें</p>
             </div>
           </div>
         </div>
@@ -208,7 +208,7 @@ const CartView = () => {
               
               <div className="flex items-center justify-between gap-3 pt-3 border-t border-gray-100">
                 <div className="flex-1">
-                  <label className="text-xs text-gray-500 block mb-1 font-medium">Quantity</label>
+                  <label className="text-xs text-gray-500 block mb-1 font-medium">संख्या</label>
                   <input
                     type="number"
                     min="1"
@@ -219,7 +219,7 @@ const CartView = () => {
                 </div>
                 
                 <div className="flex-1">
-                  <label className="text-xs text-gray-500 block mb-1 font-medium">Total</label>
+                  <label className="text-xs text-gray-500 block mb-1 font-medium">कुल राशि</label>
                   <p className="text-xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                     ₹{calculateTotal(item.productPrice, item.productQuantity).toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
                   </p>
@@ -244,19 +244,19 @@ const CartView = () => {
               <thead>
                 <tr className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white">
                   <th className="p-4 text-left text-xs font-bold uppercase tracking-wider">
-                    Product Details
+                    प्रोडक्ट की जानकारी
                   </th>
                   <th className="p-4 text-right text-xs font-bold uppercase tracking-wider">
-                    Unit Price
+                    एक पीस का दाम
                   </th>
                   <th className="p-4 text-center text-xs font-bold uppercase tracking-wider">
-                    Quantity
+                    संख्या
                   </th>
                   <th className="p-4 text-right text-xs font-bold uppercase tracking-wider">
-                    Total
+                    कुल राशि
                   </th>
                   <th className="p-4 text-center text-xs font-bold uppercase tracking-wider">
-                    Actions
+                    ऑप्शन
                   </th>
                 </tr>
               </thead>
@@ -318,11 +318,11 @@ const CartView = () => {
             {/* Summary Info */}
             <div className="space-y-3">
               <div className="flex items-center justify-between bg-gradient-to-r from-indigo-50 to-purple-50 p-3 rounded-xl">
-                <span className="text-base sm:text-lg font-semibold text-gray-700">Total Products:</span>
+                <span className="text-base sm:text-lg font-semibold text-gray-700">कुल प्रोडक्ट्स:</span>
                 <span className="font-bold text-xl sm:text-2xl text-indigo-600">{cartItems.length}</span>
               </div>
               <div className="flex items-center justify-between bg-gradient-to-r from-green-50 to-emerald-50 p-4 rounded-xl border-2 border-green-200">
-                <span className="text-base sm:text-lg font-semibold text-gray-700">Grand Total:</span>
+                <span className="text-base sm:text-lg font-semibold text-gray-700">कुल योग:</span>
                 <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                   ₹{grandTotal.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
                 </span>
@@ -330,7 +330,7 @@ const CartView = () => {
               <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 rounded-lg">
                 <p className="text-xs sm:text-sm text-yellow-800 font-medium flex items-start gap-2">
                   <span className="text-lg">💡</span>
-                  <span>Minimum order quantity: 5 units per product</span>
+                  <span>कम से कम 5 पीस का ऑर्डर प्रति प्रोडक्ट</span>
                 </p>
               </div>
             </div>
@@ -341,7 +341,7 @@ const CartView = () => {
               className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 hover:from-green-600 hover:via-emerald-600 hover:to-green-700 text-white px-6 py-4 rounded-2xl font-bold text-base sm:text-lg transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
             >
               <FaCheckCircle size={22} />
-              <span>Confirm Order</span>
+              <span>ऑर्डर कन्फर्म करें</span>
             </button>
           </div>
         </div>
