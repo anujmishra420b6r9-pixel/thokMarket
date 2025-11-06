@@ -76,7 +76,7 @@ const Login = () => {
         <div className="relative mb-4">
           <input
             type={showPassword ? "text" : "password"}
-            name="पासवर्ड"
+            name="password"
             placeholder="Password"
             value={form.password}
             onChange={handleChange}
