@@ -84,7 +84,7 @@ const Signup = () => {
         <input
           type="text"
           name="name"
-          placeholder="Full Name"
+          placeholder="पूरा नाम"
           value={formData.name}
           onChange={handleChange}
           className="w-full border px-3 py-2 rounded"
@@ -93,7 +93,7 @@ const Signup = () => {
         <input
           type="text"
           name="address"
-          placeholder="Address"
+          placeholder="पता"
           value={formData.address}
           onChange={handleChange}
           className="w-full border px-3 py-2 rounded"
@@ -102,7 +102,7 @@ const Signup = () => {
         <input
           type="password"
           name="password"
-          placeholder="Password"
+          placeholder="पासवर्ड"
           value={formData.password}
           onChange={handleChange}
           className="w-full border px-3 py-2 rounded"
@@ -111,14 +111,14 @@ const Signup = () => {
         <input
           type="number"
           name="number"
-          placeholder="Phone Number"
+          placeholder="फ़ोन नंबर"
           value={formData.number}
           onChange={handleChange}
           className="w-full border px-3 py-2 rounded"
         />
 
         <div className="space-y-2">
-          <p className="font-semibold">Category:</p>
+          <p className="font-semibold">थोक विक्रेता</p>
           <div className="relative">
             <select
               name="category"

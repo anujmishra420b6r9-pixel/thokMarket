@@ -86,7 +86,7 @@ const HomePage = () => {
               </svg>
               <input
                 type="text"
-                placeholder="Search products..."
+                placeholder="प्रोडक्ट खोजें..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 sm:pl-12 pr-10 sm:pr-12 py-3 sm:py-4 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent shadow-lg transition text-sm sm:text-base"
