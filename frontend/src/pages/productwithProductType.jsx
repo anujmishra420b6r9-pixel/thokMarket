@@ -158,66 +158,148 @@ const ProductWithProductType = () => {
             <button onClick={() => navigate("/")} className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-lg hover:from-indigo-600 hover:to-purple-700 transition font-medium">Back to Home</button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products.map((p, index) => (
-              <form key={p._id} onSubmit={(e) => { e.preventDefault(); handleAddToCart(p); }} className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border-2 border-transparent hover:border-indigo-400 transform hover:-translate-y-2" style={{ animationDelay: `${index * 50}ms`, animation: 'fadeIn 0.5s ease-out forwards', opacity: 0 }}>
-                {/* Product Image - Clickable */}
-                <div onClick={(e) => { if (e.target.tagName !== "BUTTON" && e.target.tagName !== "INPUT") handleNavigateToSingleProduct(p); }} className="cursor-pointer">
-                  <div className="relative h-64 bg-gradient-to-br from-indigo-100 to-purple-100 overflow-hidden group">
-                    {p.productFile1 ? (
-                      <img src={p.productFile1} alt={p.productName} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <svg className="w-16 h-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                      </div>
-                    )}
-                    <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full">
-                      <span className="text-indigo-600 font-bold text-sm">₹{p.productPrice}</span>
-                    </div>
-                  </div>
-
-                  {/* Product Details */}
-                  <div className="p-5">
-                    <h2 className="text-xl font-bold text-gray-800 mb-2 line-clamp-2 hover:text-indigo-600 transition-colors">
-                      {p.productName}
-                    </h2>
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                      {p.productDescription}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Quantity & Add to Cart */}
-                <div className="px-5 pb-5 space-y-3">
-                  <div className="bg-gray-50 rounded-xl p-3">
-                    <label className="block text-xs font-semibold text-gray-600 mb-2">संख्या (Min: 5)</label>
-                    <div className="flex items-center justify-center space-x-3">
-                      <button type="button" onClick={() => decrementQuantity(p._id)} className="w-10 h-10 bg-gradient-to-br from-gray-200 to-gray-300 hover:from-gray-300 hover:to-gray-400 rounded-lg flex items-center justify-center transition-all shadow-md hover:shadow-lg transform hover:scale-105">
-                        <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M20 12H4" />
-                        </svg>
-                      </button>
-                      <input type="number" value={quantities[p._id]} onChange={(e) => handleQuantityChange(p._id, e.target.value)} className="w-20 text-center text-lg font-bold border-2 border-gray-300 rounded-lg px-2 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all" />
-                      <button type="button" onClick={() => incrementQuantity(p._id)} className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 rounded-lg flex items-center justify-center transition-all shadow-md hover:shadow-lg transform hover:scale-105">
-                        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-
-                  <button type="submit" className="w-full py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-2">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m0 0h8m-10 0a1.5 1.5 0 003 0m-3 0a1.5 1.5 0 00-3 0m3 0h1.5m-1.5 0a1.5 1.5 0 003 0" />
-                    </svg>
-                    <span>कार्ट में डालें</span>
-                  </button>
-                </div>
-              </form>
-            ))}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+  {products.map((p, index) => (
+    <form
+      key={p._id}
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleAddToCart(p);
+      }}
+      className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-200 hover:border-indigo-400 transform hover:-translate-y-1"
+      style={{
+        animationDelay: `${index * 50}ms`,
+        animation: "fadeIn 0.5s ease-out forwards",
+        opacity: 0,
+      }}
+    >
+      {/* Product Image */}
+      <div
+        onClick={(e) => {
+          if (e.target.tagName !== "BUTTON" && e.target.tagName !== "INPUT")
+            handleNavigateToSingleProduct(p);
+        }}
+        className="cursor-pointer"
+      >
+        <div className="relative h-28 bg-gradient-to-br from-indigo-100 to-purple-100 overflow-hidden group">
+          {p.productFile1 ? (
+            <img
+              src={p.productFile1}
+              alt={p.productName}
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              <svg
+                className="w-10 h-10 text-gray-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+            </div>
+          )}
+          <div className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded-full">
+            <span className="text-indigo-600 font-bold text-xs">
+              ₹{p.productPrice}
+            </span>
           </div>
+        </div>
+
+        {/* Product Name */}
+        <div className="p-3">
+          <h2 className="text-sm font-semibold text-gray-800 line-clamp-2 hover:text-indigo-600 transition-colors">
+            {p.productName}
+          </h2>
+        </div>
+      </div>
+
+      {/* Quantity & Add to Cart */}
+      <div className="px-3 pb-3 space-y-2">
+        <div className="bg-gray-50 rounded-lg p-2">
+          <label className="block text-[10px] font-semibold text-gray-600 mb-1">
+            Quantity (Min: 5)
+          </label>
+          <div className="flex items-center justify-center space-x-2">
+            <button
+              type="button"
+              onClick={() => decrementQuantity(p._id)}
+              className="w-8 h-8 bg-gray-200 hover:bg-gray-300 rounded-md flex items-center justify-center transition-all"
+            >
+              <svg
+                className="w-4 h-4 text-gray-700"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="3"
+                  d="M20 12H4"
+                />
+              </svg>
+            </button>
+            <input
+              type="number"
+              value={quantities[p._id]}
+              onChange={(e) =>
+                handleQuantityChange(p._id, e.target.value)
+              }
+              className="w-14 text-center text-sm font-bold border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-500"
+            />
+            <button
+              type="button"
+              onClick={() => incrementQuantity(p._id)}
+              className="w-8 h-8 bg-indigo-500 hover:bg-indigo-600 rounded-md flex items-center justify-center transition-all"
+            >
+              <svg
+                className="w-4 h-4 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="3"
+                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          className="w-full py-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white text-sm font-semibold rounded-lg shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-1"
+        >
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m0 0h8m-10 0a1.5 1.5 0 003 0m-3 0a1.5 1.5 0 00-3 0m3 0h1.5m-1.5 0a1.5 1.5 0 003 0"
+            />
+          </svg>
+          <span>Add</span>
+        </button>
+      </div>
+    </form>
+  ))}
+</div>
+
         )}
       </div>
 
