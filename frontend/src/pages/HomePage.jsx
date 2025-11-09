@@ -113,7 +113,8 @@ const HomePage = () => {
         {/* Products Grid */}
         <div className="px-3 sm:px-4 md:px-6">
           {filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 max-w-7xl mx-auto">
+            <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-3 md:gap-4 max-w-7xl mx-auto">
+
               {filteredProducts.map((product, index) => (
                 <div
                   key={product._id}
@@ -130,9 +131,10 @@ const HomePage = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                     </svg>
                   </div>
-                  <h3 className="text-gray-800 font-bold text-sm sm:text-base md:text-lg mb-1 sm:mb-2 line-clamp-2 w-full">
+                  <h3 className="text-gray-800 font-semibold text-xs sm:text-sm md:text-base mb-1 sm:mb-2 line-clamp-2 w-full">
                     {product.productType}
                   </h3>
+
                   <span className="inline-block px-2 py-0.5 sm:px-3 sm:py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-semibold mb-2 sm:mb-3">
                     {product.category}
                   </span>
