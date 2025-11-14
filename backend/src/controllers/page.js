@@ -17,19 +17,19 @@ export async function profile(req, res) {
 
     let orders = [];
 
-    // 🟢 अगर User है → userId से उसके ऑर्डर खोजो
+    // User Orders
     if (user.rank === "user") {
       orders = await modelOrderHistory.find({ userId: user.id }).lean();
     }
 
-    // 🟣 अगर Admin है → items के अंदर adminId से खोजो
+    // Admin Orders
     else if (user.rank === "admin") {
       orders = await modelOrderHistory.find({
         "items.adminId": user.id.toString()
       }).lean();
     }
 
-    // अगर कोई ऑर्डर नहीं मिला
+    // No Orders
     if (!orders.length) {
       return res.status(200).json({
         success: true,
@@ -45,10 +45,16 @@ export async function profile(req, res) {
       });
     }
 
-    // Orders को summary में convert करो
+    // Make Summary
     const orderSummary = orders.map((order) => {
-      const totalProducts = order.items.reduce((acc, item) => acc + item.quantity, 0);
-      const totalPrice = order.items.reduce((acc, item) => acc + item.quantity * item.price, 0);
+      const totalProducts = order.items.reduce(
+        (acc, item) => acc + item.quantity,
+        0
+      );
+      const totalPrice = order.items.reduce(
+        (acc, item) => acc + item.quantity * item.price,
+        0
+      );
 
       return {
         _id: order._id,
@@ -57,10 +63,15 @@ export async function profile(req, res) {
         status: order.status,
         orderStatus: order.orderStatus,
         createdAt: order.createdAt,
+
+        // send customer info
+        userName: order.userName,
+        userNumber: order.userNumber,
+        userAddress: order.userAddress,
       };
     });
 
-    // Response भेजो
+    // 👉👉 FINAL RESPONSE (missing earlier)
     return res.status(200).json({
       success: true,
       user: {
@@ -75,7 +86,10 @@ export async function profile(req, res) {
 
   } catch (error) {
     console.error("🔴 Profile Controller Error:", error);
-    return res.status(500).json({ success: false, message: "Failed to fetch profile." });
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch profile.",
+    });
   }
 }
 

@@ -196,7 +196,8 @@ const Profile = () => {
                     <span className="text-xs font-mono text-gray-500 bg-gray-100 px-2 py-1 rounded">
                       #{index + 1}
                     </span>
-                    <span className="text-xs text-gray-600">{user.number}</span>
+                    <span className="text-xs text-gray-600">{order.userNumber}</span>
+                    <p className="text-sm font-semibold">{order.userName}</p>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
