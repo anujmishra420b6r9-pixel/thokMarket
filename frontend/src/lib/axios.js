@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // 🔹 Direct backend URL define कर दो
-const BASE_URL = "https://thokmarket-191.onrender.com/api";
+const BASE_URL = "https://thokmarket.shop/api";
 
 // 🔹 Axios instance बनाओ
 const api = axios.create({
