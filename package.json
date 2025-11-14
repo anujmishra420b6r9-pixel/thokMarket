@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
-    "start":"npm run start --prefix backend"
+    "start": "npm run start --prefix backend"
   },
   "repository": {
     "type": "git",
@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/anujmishra420b6r9-pixel/thokMarket/issues"
   },
-  "homepage": "https://github.com/anujmishra420b6r9-pixel/thokMarket#readme"
+  "homepage": "https://github.com/anujmishra420b6r9-pixel/thokMarket#readme",
+  "dependencies": {
+    "browser-image-compression": "^2.0.2"
+  }
 }
