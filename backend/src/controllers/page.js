@@ -245,9 +245,10 @@ export async function homePage(req, res) {
     }
 
     // ✅ Step 2: Find all productTypes matching user's category
+    // ⬅ यहाँ image भी शामिल कर दिया (पहले वाले code की तरह)
     const matchingProducts = await productType
       .find({ category: userCategory })
-      .select("_id productType category") // sirf required fields
+      .select("_id productType category image") 
       .lean();
 
     // ✅ Step 3: Check if products found
@@ -280,7 +281,8 @@ export async function homePage(req, res) {
         products: matchingProducts.map(product => ({
           id: product._id,
           productType: product.productType,
-          category: product.category
+          category: product.category,
+          image: product.image   // ⬅ पहले वाले code जैसा IMAGE जोड़ दिया
         })),
         totalProducts: matchingProducts.length
       }
@@ -298,7 +300,10 @@ export async function homePage(req, res) {
     });
 
     // Database connection error
-    if (error.name === "MongoNetworkError" || error.name === "MongooseServerSelectionError") {
+    if (
+      error.name === "MongoNetworkError" ||
+      error.name === "MongooseServerSelectionError"
+    ) {
       return res.status(503).json({
         success: false,
         message: "Database connection failed. Please try again later."
@@ -320,4 +325,5 @@ export async function homePage(req, res) {
     });
   }
 }
+
 

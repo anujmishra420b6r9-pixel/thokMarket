@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import { productTypeConnect } from "../config/productType.js"; // named import
+import { productTypeConnect } from "../config/productType.js"; 
 
-const productTypeSchema = new mongoose.Schema( 
-    {
+const productTypeSchema = new mongoose.Schema(
+  {
     category: {
       type: String,
       required: true
@@ -10,10 +10,12 @@ const productTypeSchema = new mongoose.Schema(
     productType: {
       type: String,
       required: true
+    },
+    image: {
+      type: String, // Cloudinary URL
+      required: true
     }
-},
-        
-  
+  },
   { timestamps: true }
 );
 

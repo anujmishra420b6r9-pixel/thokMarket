@@ -4,8 +4,79 @@ import { Product } from "../models/product.js";
 import {Admin} from "../models/admin.js";
 import jwt from "jsonwebtoken";
 import { User } from "../models/User.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 
+
+
+export async function ProductTypeRoute(req, res) {
+  try {
+    const token = req.cookies?.userToken;
+    if (!token) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const rank = decoded.rank;
+
+    if (rank !== "master" && rank !== "admin") {
+      return res.status(403).json({ success: false, message: "Access denied" });
+    }
+
+    const { category, productType: type } = req.body;
+
+    if (!category || !type || !req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "Category, productType & image are required"
+      });
+    }
+
+    // Category exists?
+    const cat = await Category.findOne({
+      category: { $regex: `^${category}$`, $options: "i" }
+    });
+
+    if (!cat) {
+      return res.status(404).json({ success: false, message: "Category does not exist" });
+    }
+
+    // Already exists?
+    const exists = await productType.findOne({
+      category: { $regex: `^${category}$`, $options: "i" },
+      productType: { $regex: `^${type}$`, $options: "i" }
+    });
+
+    if (exists) {
+      return res.status(409).json({ success: false, message: "Product type already exists" });
+    }
+
+    // Cloudinary Upload
+    const uploadedImage = await uploadOnCloudinary(req.file.path);
+    if (!uploadedImage) {
+      return res.status(500).json({ success: false, message: "Image upload failed" });
+    }
+
+    // Save in DB
+    const newType = new productType({
+      category,
+      productType: type,
+      image: uploadedImage.secure_url
+    });
+
+    await newType.save();
+
+    return res.status(201).json({
+      success: true,
+      message: "Product type created successfully",
+      data: newType
+    });
+
+  } catch (error) {
+    console.error("ProductTypeRoute error:", error);
+    return res.status(500).json({ success: false, message: "Server error", error: error.message });
+  }
+}
 
 
 
@@ -86,47 +157,7 @@ export async function deleteProductType(req, res) {
   }
 }
 
-export async function ProductTypeRoute(req, res) {
-  try {
-     // 🔹 0️⃣ Check master access from cookie
-    const raw = req.cookies?.userInfo;
-    const { id } = JSON.parse(raw);
-    const { category, productType: type } = req.body; // rename to "type" for clarity
 
-    if (!category || !type) {
-      return res.status(400).json({ message: "Category and product type are required" });
-    }
-
-    // 🔹 1️⃣ Category exist check (case-insensitive)
-    const cat = await Category.findOne({ category: { $regex: `^${category}$`, $options: "i" } });
-    if (!cat) {
-      return res.status(404).json({ message: "Category does not exist" });
-    }
-
-    // 🔹 2️⃣ Check if product type already exists under this category (case-insensitive)
-    const existingType = await productType.findOne({
-      category: { $regex: `^${category}$`, $options: "i" },
-      productType: { $regex: `^${type}$`, $options: "i" }
-    });
-
-    if (existingType) {
-      return res.status(409).json({ message: "Product type already exists" });
-    }
-
-    // 🔹 3️⃣ Save new product type
-    const newType = new productType({ category, productType: type });
-    await newType.save();
-
-    return res.status(201).json({
-      message: "Product type saved successfully",
-      productType: newType
-    });
-
-  } catch (error) {
-    console.error("ProductTypeRoute error:", error);
-    return res.status(500).json({ message: "Server error", error: error.message });
-  }
-}
 
 
 export async function CategoryRoute(req, res) {

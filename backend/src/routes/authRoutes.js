@@ -20,7 +20,7 @@ router.post("/adminSignup",authenticate,checkMaster, adminSignup);
 router.post("/login", login);
 router.post("/logout", logout);
 router.post("/createCategory",authenticate,checkMaster, CategoryRoute);
-router.post("/createProductType",authenticate, ProductTypeRoute);
+router.post("/createProductType",authenticate,upload.single("image"),ProductTypeRoute);
 router.post("/productCreate",  authenticate,checkAdmin, upload.fields([{ name: "productFiles", maxCount: 3 }]),productCreate);export default router;
 router.post("/cart", authenticate ,cart);
 router.post("/orderHistory",authenticate,createOrderHistory);
