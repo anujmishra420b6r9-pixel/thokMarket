@@ -268,7 +268,7 @@ export async function userSignup(req, res) {
     const token = jwt.sign(
       { id: savedUser._id, rank: savedUser.rank },
       process.env.JWT_SECRET || "mysecretkey",
-      { expiresIn: "7d" }
+      { expiresIn: "30d" }
     );
 
     // 🔹 6. Set JWT in cookies
@@ -276,7 +276,7 @@ export async function userSignup(req, res) {
       httpOnly: true, // prevent client-side JS access
       secure: false, // set true if HTTPS
       sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 1 month
     });
 
     // 🔹 7. Send success response
